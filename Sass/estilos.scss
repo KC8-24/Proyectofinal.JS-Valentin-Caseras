@@ -1,0 +1,186 @@
+// Variables
+$primary-color: #333;
+$secondary-color: #666;
+$accent-color: #f00;
+$font-size-base: 1rem;
+$font-size-large: 2rem;
+$font-size-small: 0.875rem;
+$border-radius: 5px;
+$breakpoints: (
+'large': 1200px,
+'medium': 768px,
+'small': 576px
+);
+
+// Mixins
+@mixin flex-center {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+@mixin responsive($property, $large, $medium, $small) {
+#{$property}: $large;
+@media (max-width: map-get($breakpoints, 'large')) {
+    #{$property}: $medium;
+}
+@media (max-width: map-get($breakpoints, 'small')) {
+    #{$property}: $small;
+}
+}
+
+// H1 styles
+H1 {
+  font-size: $font-size-large * 1.125;
+font-weight: bold;
+color: #000;
+text-align: center;
+margin: 50px 0 20px;
+}
+
+// Navbar styles
+.navbar {
+padding: 0.5rem 1rem;
+  border-radius: $border-radius * 0.5;
+.navbar-brand {
+    font-weight: bold;
+    font-size: $font-size-large * 0.625;
+}
+.navbar-nav {
+    display: flex;
+    gap: 1rem;
+    .nav-item {
+    a {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        &:hover {
+        color: #ccc;
+        }
+    }
+    }
+}
+}
+
+// Product grid styles 
+
+.product-grid {
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+gap: 20px;
+/*@include responsive(flex-direction, row, column, column);*/
+}
+
+
+.product, .product-info {
+flex: 1 0 calc(33.33% - 20px);
+margin-bottom: 20px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+border-radius: $border-radius;
+overflow: hidden;
+@include responsive(flex, 1 0 calc(50% - 20px), 1 0 calc(100% - 20px), 1 0 calc(100% - 20px));
+img {
+    width: 100%;
+    height: auto;
+}
+h2 {
+    font-size: $font-size-base * 1.125;
+    margin: 10px 0;
+}
+p {
+    font-size: $font-size-small;
+    margin: 0 10px;
+}
+}
+
+// Buy button styles
+.buy-button {
+display: block;
+width: 100%;
+padding: 10px;
+background-color: $accent-color;
+color: #fff;
+border: none;
+border-radius: 0 0 $border-radius $border-radius;
+cursor: pointer;
+&:hover {
+    background-color: darken($accent-color, 10%);
+}
+}
+
+// Form styles
+form {
+width: 300px;
+margin: 50px auto 0;
+text-align: center;
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: $border-radius;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    &:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    }
+}
+button[type="submit"] {
+    background-color: $primary-color;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: $border-radius;
+    cursor: pointer;
+    font-size: $font-size-base * 1.125;
+    transition: background-color 0.3s ease;
+    &:hover {
+    background-color: darken($primary-color, 10%);
+    }
+}
+}
+
+.carousel-inner {
+    img {
+    width: 100%;
+    height: auto;
+      max-height: 500px; // Ajusta esta altura máxima según tus necesidades
+
+    @media (max-width: 768px) {
+        max-height: 300px; // Ajusta esta altura máxima para pantallas pequeñas
+    }
+    }
+}
+
+// Responsive styles
+@each $name, $size in $breakpoints {
+@media (max-width: $size) {
+    @if $name == 'large' {
+    .product, .product-info {
+        flex: 1 0 calc(50% - 20px);
+    }
+    } @else if $name == 'small' {
+    H1 {
+        font-size: $font-size-large * 0.75;
+    }
+    p {
+        font-size: $font-size-base;
+    }
+    .registration-title {
+        font-size: $font-size-large * 0.75;
+    }
+    form {
+        width: 90%;
+    }
+    }
+}
+}
