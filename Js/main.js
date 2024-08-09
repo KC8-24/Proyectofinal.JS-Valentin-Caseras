@@ -18,8 +18,8 @@ document.getElementById('registerForm').addEventListener('submit', function(even
         password: password
     };
 
-        // Mostrar los datos en la consola
-        console.log('Usuario registrado:', user);
+    // Mostrar los datos en la consola
+    console.log('Usuario registrado:', user);
 
     // Obtener los usuarios almacenados en localStorage
     let users = JSON.parse(localStorage.getItem('users')) || [];
@@ -37,9 +37,21 @@ document.getElementById('registerForm').addEventListener('submit', function(even
 });
 
 function showMessage(message, type) {
-    let messageDiv = document.getElementById('message');
-    messageDiv.innerText = message;
-    messageDiv.style.color = type === 'success' ? 'green' : 'red';
+    if (type === 'success') {
+        Swal.fire({
+            title: 'Usuario registrado con éxito',
+            text: 'BIENVENIDO',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    } else {
+        Swal.fire({
+            title: 'Error',
+            text: message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    }
 
     setTimeout(() => {
         messageDiv.innerText = '';
